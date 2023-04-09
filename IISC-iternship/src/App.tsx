@@ -1,3 +1,5 @@
+// this module is used to create a router
+
 import './App.css'
 import Page1 from './pages/page1'
 import Page2 from './pages/page2';
@@ -6,6 +8,7 @@ import routeNames from './data/routes';
 
 function App() {
 
+  // all the route paths
   const router = createMemoryRouter([
     {
       path: routeNames[0],

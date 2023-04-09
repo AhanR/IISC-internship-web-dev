@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import Modal from './modal'
-import { keytoicon } from '../data/modes_data'
 
+// creating an interface for the prop type
 interface props {
     data : {string:any},
     mode : string,
     closer: Function
 }
 
+
 export default function ModeDetail(props : props): React.ReactElement {
 
+    // creating a copy of the mode selected by the user
+    // this is the mode that we need to display information about
     const modeSelected = props.mode
 
+    // maintaining all the details that need to be displayed
     const [details, setDetails] = useState({});
 
+    // this function is used to compute the details about the mode of transportation as per the question
     const computeDetails = () => {
         return {
             name : props.data[modeSelected],
@@ -27,6 +32,7 @@ export default function ModeDetail(props : props): React.ReactElement {
         }
     } 
 
+    // this function runs only once when the mode that has been selected changes
     useEffect(()=>{
         setDetails(computeDetails());
     },[props.mode])

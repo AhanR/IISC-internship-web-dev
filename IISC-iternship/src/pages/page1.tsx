@@ -1,14 +1,23 @@
+// this module is for the first page
+
+// framer motion for animation
+// react-icons for some icons
+// router-dom for routing throughout the app
+// routeNames used to keep sync between the route names across modules
+// redux, used to update the global information store
+// chageDestination is a custom reducer to update the destination value in the store
+// chageMode is a custom reducer to update the mode value in the store
 import { AnimatePresence, motion } from 'framer-motion';
 import React, {useState} from 'react'
 import { BsArrowLeft, BiBus, MdOutlineTrain, RiEBike2Line, AiOutlineCar, BsBicycle, FaCaravan, RiTaxiWifiLine } from 'react-icons/all'
 import { useNavigate } from 'react-router-dom';
-import { redirect } from "react-router-dom"
 import routeNames from '../data/routes';
 import {useDispatch} from 'react-redux'
 import { changeDestination } from '../reducers/destination';
 import { changeMode } from '../reducers/mode';
 
 export default function Page1() {
+    // some common styles for the options
     const optionStyle = "p-[1.5ch]  rounded-[1.5ch] border-2 mr-[1.5ch] mt-[1.5ch] cursor-pointer";
     // all the selection options for page 1
     const options = {
@@ -77,9 +86,11 @@ export default function Page1() {
         ]
     }
     
+    // the current question number, we have 2 on the first page
     const [Question, setQuestion] = useState(0);
+    // history is a router object that can help navigate the pages
     const history = useNavigate();
-
+    // dispatcher used to dispatch reducers on redux stores
     const dispatcher = useDispatch();
 
   return (
@@ -87,6 +98,7 @@ export default function Page1() {
         <AnimatePresence
             mode='wait'
         >
+            {/* displaying only the question that is in focus */}
             {Question==0?
                 <motion.section
                     key="Q1"

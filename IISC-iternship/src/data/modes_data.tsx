@@ -1,3 +1,6 @@
+// this module is meant for data sync and retreival
+// we import all the icons to keep track
+// redux to read the data from the data store
 import { ReactNode } from "react"
 import {
     BiBus,
@@ -8,10 +11,12 @@ import {
     FaCaravan,
     RiTaxiWifiLine
 } from "react-icons/all"
-import { IconType } from "react-icons/lib"
 import { useSelector } from "react-redux"
+
+// this is used to calculate the key value of mode_4 since it does become ambiguous otherwise
 const distance = useSelector((store:any) => store.destination)
 
+// maps the keys to the modes
 export const keytomode = {
     1 :"mode_1",
     2 :"mode_2",
@@ -23,6 +28,7 @@ export const keytomode = {
     9 :"mode_9",
 }
 
+// maps the keys to the respective icons
 export const keytoicon = {
     1: <BiBus/>,
     2: <BiBus/>,
@@ -35,6 +41,7 @@ export const keytoicon = {
 
 }
 
+// converts the mode to key to remove ambiguity
 export const modetokey = (mode:string):number => {
     if(mode=="mode_4" && distance == 1){
         return 4;

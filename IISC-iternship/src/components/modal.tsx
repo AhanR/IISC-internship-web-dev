@@ -1,9 +1,13 @@
+// simple modal wrapper that can help with any modal requirement
+
 import React from "react";
 
+// interface for the props
 interface WrapperProps {
   children: React.ReactNode;
 }
 
+// lightly styled modal component
 export default function Modal({children} : WrapperProps) {
   return (
     <div

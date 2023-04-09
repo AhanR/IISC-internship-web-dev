@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import mode from './reducers/mode'
-import duration from './reducers/duration'
+import destination from './reducers/destination'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
 const store = configureStore({
   reducer: {
     mode: mode,
-    duration: duration
+    destination: destination
   }
 })
 

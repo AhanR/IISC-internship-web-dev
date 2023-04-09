@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, {useState} from 'react'
-import { BsArrowLeft, BiBus, MdOutlineTrain, RiEBike2Line, AiOutlineCar, BsBicycle, FaCaravan, TbBrandUber } from 'react-icons/all'
+import { BsArrowLeft, BiBus, MdOutlineTrain, RiEBike2Line, AiOutlineCar, BsBicycle, FaCaravan, RiTaxiWifiLine } from 'react-icons/all'
 import { useNavigate } from 'react-router-dom';
 import { redirect } from "react-router-dom"
-import routeNames from '../routes';
+import routeNames from '../data/routes';
 import {useDispatch} from 'react-redux'
-import { changeDuration } from '../reducers/duration';
+import { changeDestination } from '../reducers/destination';
 import { changeMode } from '../reducers/mode';
 
 export default function Page1() {
@@ -45,8 +45,8 @@ export default function Page1() {
             },
             {
                 key: 7,
-                text: "App based ride hauling services like OLA/Uber",
-                icon: TbBrandUber
+                text: "OLA/Uber/Taxi",
+                icon: RiTaxiWifiLine
             }
         ],
         "Q2":[
@@ -98,7 +98,7 @@ export default function Page1() {
                         <h2 className=' text-3xl' >What is your most frequently used mode of travel from work to home?</h2>
                     </div>
                     <div className="options flex flex-row flex-wrap">
-                        {options["Q1"].map(option => <div 
+                        {options["Q1"].map(option => <motion.div 
                             key={option.key}
                             className={optionStyle + " items-center flex flex-col justify-center min-w-[10ch] "}
                             onClick={()=>{
@@ -107,12 +107,13 @@ export default function Page1() {
                                 // change the Question to slide to next page
                                 setQuestion(q=>q+1)
                             }}
+                            whileTap={{ scale: 0.8 }}
                             >
                                 <option.icon className='text-4xl'/>
-                                <div className=' text-xs my-auto text-slate-300 max-w-[20ch] text-center mt-2'>
+                                <div className=' text-xs my-auto text-slate-300 max-w-[20ch] text-center mt-2 pointer-events-none'>
                                     {option.text}
                                 </div>
-                            </div>)}
+                            </motion.div>)}
                     </div>
                 </motion.section>:
                 <motion.section
@@ -133,18 +134,19 @@ export default function Page1() {
                         <h2 className=' text-3xl'>What is the total distance between your home and workplace?</h2>
                     </div>
                     <div className="options flex flex-row flex-wrap">
-                        {options["Q2"].map(option => <div 
+                        {options["Q2"].map(option => <motion.div 
                             key={option.key} 
                             className={optionStyle}
                             onClick={()=>{
                                 // push data to store
-                                dispatcher(changeDuration(option.key))
+                                dispatcher(changeDestination(option.key))
                                 // move to next page
                                 history(routeNames[1], { state: { from: routeNames[0] } })
                             }}
+                            whileTap={{ scale: 0.8 }}
                         >
                             {option.text}
-                        </div>)}
+                        </motion.div>)}
                     </div>
                 </motion.section>
             }

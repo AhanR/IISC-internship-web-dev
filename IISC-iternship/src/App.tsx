@@ -2,7 +2,7 @@ import './App.css'
 import Page1 from './pages/page1'
 import Page2 from './pages/page2';
 import { RouterProvider, createMemoryRouter } from "react-router-dom"
-import routeNames from './routes';
+import routeNames from './data/routes';
 
 function App() {
 

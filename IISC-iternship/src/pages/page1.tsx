@@ -2,9 +2,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, {useState} from 'react'
 import { BsArrowLeft, BiBus, MdOutlineTrain, RiEBike2Line, AiOutlineCar, BsBicycle, FaCaravan, TbBrandUber } from 'react-icons/all'
 import { useNavigate } from 'react-router-dom';
+import { redirect } from "react-router-dom"
+import routeNames from '../routes';
+import {useDispatch} from 'react-redux'
+import { changeDuration } from '../reducers/duration';
+import { changeMode } from '../reducers/mode';
 
 export default function Page1() {
     const optionStyle = "p-[1.5ch]  rounded-[1.5ch] border-2 mr-[1.5ch] mt-[1.5ch] cursor-pointer";
+    // all the selection options for page 1
     const options = {
         "Q1":[
             {
@@ -74,8 +80,10 @@ export default function Page1() {
     const [Question, setQuestion] = useState(0);
     const history = useNavigate();
 
+    const dispatcher = useDispatch();
+
   return (
-    <div className=' w-screen h-screen flex justify-center flex-col px-[4ch] ' >
+    <div className=' w-screen h-screen flex justify-center flex-col px-[3ch] ' >
         <AnimatePresence
             mode='wait'
         >
@@ -90,8 +98,17 @@ export default function Page1() {
                         <h2 className=' text-3xl' >What is your most frequently used mode of travel from work to home?</h2>
                     </div>
                     <div className="options flex flex-row flex-wrap">
-                        {options["Q1"].map(option => <div className={optionStyle + " items-center flex flex-col justify-center min-w-[10ch] "} >
-                                <option.icon className='text-2xl'/>
+                        {options["Q1"].map(option => <div 
+                            key={option.key}
+                            className={optionStyle + " items-center flex flex-col justify-center min-w-[10ch] "}
+                            onClick={()=>{
+                                // add content to the redux store
+                                dispatcher(changeMode(option.key))
+                                // change the Question to slide to next page
+                                setQuestion(q=>q+1)
+                            }}
+                            >
+                                <option.icon className='text-4xl'/>
                                 <div className=' text-xs my-auto text-slate-300 max-w-[20ch] text-center mt-2'>
                                     {option.text}
                                 </div>
@@ -107,7 +124,7 @@ export default function Page1() {
                     <div className="header">
                         <button
                             onClick={()=>{
-                                history("/")
+                                // set the active question on the page
                                 setQuestion(0)
                             }}
                         >
@@ -116,7 +133,18 @@ export default function Page1() {
                         <h2 className=' text-3xl'>What is the total distance between your home and workplace?</h2>
                     </div>
                     <div className="options flex flex-row flex-wrap">
-                        {options["Q2"].map(option => <div key={option.key} className={optionStyle}>{option.text}</div>)}
+                        {options["Q2"].map(option => <div 
+                            key={option.key} 
+                            className={optionStyle}
+                            onClick={()=>{
+                                // push data to store
+                                dispatcher(changeDuration(option.key))
+                                // move to next page
+                                history(routeNames[1], { state: { from: routeNames[0] } })
+                            }}
+                        >
+                            {option.text}
+                        </div>)}
                     </div>
                 </motion.section>
             }

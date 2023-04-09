@@ -108,10 +108,14 @@ export default function Page2() {
             key={m}
             className=' p-[1.5ch] rounded-[1.5ch] flex flex-col items-center justify-center border-2 mr-[1.5ch] mt-[1.5ch] cursor-pointer'
           >
-            <div>
+            <div
+              className='text-sm'
+            >
               {data.Data[0][m]}
             </div>
-            <div>23 min | ₹51</div>
+            <div
+              className='text-xs text-slate-300'
+            >23 min | ₹51</div>
           </motion.div>)}
         </div>
       </div>

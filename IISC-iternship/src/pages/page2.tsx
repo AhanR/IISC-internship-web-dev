@@ -1,3 +1,9 @@
+// importing redux for state management
+// importing router-dom for routing activities
+// importing react icons for good looking icons
+// imoprting the data to use later
+// framer motion for animations
+// modeDetail for displaying mode details on a modal
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,30 +13,36 @@ import data2 from "../data/sample_db_10km.json"
 import data3 from "../data/sample_db_15km.json"
 import data4 from "../data/sample_db_20km.json"
 import data5 from "../data/sample_db_25km.json"
-import { iconGenFromKey, keytoicon, modetokey } from '../data/modes_data'
-import { IconType } from 'react-icons/lib'
-import {motion} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import ModeDetail from '../components/modeDetail'
-import {AnimatePresence} from "framer-motion"
 
 
 export default function Page2() {
 
+  // mode choice is retreived from the redux store
   const modeChoice = useSelector((store:any) => store.mode)
+  // the distance choosen by the user in the previous page is retreived from the redux store
   const destinationChoice = useSelector((store:any) => store.destination)
+  // final list of modes to be displayed to the user
   const [finalModes, setFinalModes] = useState(["mode_1","mode_2","mode_4","mode_8","mode_7"]);
+  // the data that is to be used for the current selection
   const [data, setData] = useState(data1);
+  // flag to maintain modal state
   const [modalClose, setModalClose] = useState(true);
+  // the mode that has been currently clicked on
   const [selectedMode, setSelectedMode] = useState("");
 
+  // this function is run only once when the component is loaded so that we can initialize the modes to show according to the problem statement
   const chooseFinalModes = () => {
 
+    // adding in randomization as per problem
     setFinalModes(state=>{
       state[3] = (Math.random()>0.5)? "mode_8": "mode_9";
       state[4] = (Math.random()>0.5)? "mode_7":"mode_5";
       return state;
     })
 
+    // all conditions from the problem are emulated here
     if(modeChoice == 4) {
       setFinalModes(state => {
         state[3] = "mode_8";
@@ -57,6 +69,7 @@ export default function Page2() {
     }
   }
 
+  // a function used to find which data set is to be used
   const chooseData = (x:number) =>{
     if(x==1){
       setData(data1);
@@ -71,11 +84,14 @@ export default function Page2() {
     }
   }
 
+  // this snippet runs only once when the component loads up.
+  // it triggers the other functions that must be run on component load
   useEffect(()=>{
     chooseFinalModes();
     chooseData(destinationChoice)
   },[])
 
+  // a react router element used to control the state of the application
   const navigator = useNavigate();
 
 
